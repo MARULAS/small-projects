@@ -1,0 +1,32 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+
+.parent{
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Bu da dikeyde ortalar (eğer yüksekliği varsa) */
+  width: 100%;
+  height: 100vh;
+  background-color: aqua;
+  background-image: url('https://images.ctfassets.net/h9i30ml9c3lu/6Fhz4QFI3BTSXdUfnd9xI4/2b2e71583d9199009cad33daf4cf7439/john-mcarthur-ROQzKIAdY78-unsplash__1_.jpg');
+
+
+}
+
+
+.input-style{
+  color: red;
+  width: 100px;
+  height: 30px;
+  margin: 10px;
+  text-align: center;
+  font-size: larger;
+}
+
+#equalsign{
+  margin-left: 10px;
+  font-size: xx-large;
+  color: blue;
+}
