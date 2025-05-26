@@ -8,21 +8,37 @@ import './index.css'
 function App() {
 
   const [inputValue, setInputValue] = useState('');
+  
+  
+  
   const [todos, setTodos] = useState([]);
-  
-  const addTodo = () => {
-    if (inputValue.trim() === '') return;
-    setTodos([...todos, inputValue]);
-    setInputValue('');
-  };
-  const editTodo = (indexToEdit, newValue) => {
-    setTodos(todos.map((todo, i) => i === indexToEdit ? newValue : todo));
-  };
-  const deleteTodo = (indexToDelete) => {
-    setTodos(todos.filter((_, i) => i !== indexToDelete));
-  };
-  
-  
+
+const addTodo = () => {
+  if (inputValue.trim() === '') return;
+  setTodos([...todos, { text: inputValue, isEditing: false }]);
+  setInputValue('');
+};
+
+const deleteTodo = (indexToDelete) => {
+  setTodos(todos.filter((_, i) => i !== indexToDelete));
+};
+
+const toggleEditMode = (index) => {
+  setTodos(
+    todos.map((todo, i) =>
+      i === index ? { ...todo, isEditing: !todo.isEditing } : todo
+    )
+  );
+};
+
+const editTodo = (index, newValue) => {
+  setTodos(
+    todos.map((todo, i) =>
+      i === index ? { ...todo, text: newValue } : todo
+    )
+  );
+};
+
 
   return (
     <>
@@ -33,25 +49,28 @@ function App() {
         <button onClick={addTodo} style={{height:40, marginTop: 22}}>Ekle</button>
       </div>
       {todos.map((value, index) => (
-  <TodoComponent 
-    value={value} 
-    key={index} 
-    index={index} 
-    editTodo={editTodo} 
-    deleteTodo={deleteTodo} 
+  <TodoComponent
+    value={value}
+    key={index}
+    index={index}
+    editTodo={editTodo}
+    deleteTodo={deleteTodo}
+    toggleEditMode={toggleEditMode}
   />
 ))}
+
 
     </>
   )
 }
 
-function TodoComponent({ value, index, editTodo, deleteTodo }) {
+function TodoComponent({ value, index, editTodo, deleteTodo, toggleEditMode }) {
   return (
     <div className='todo'>
       <input
         type='text'
-        value={value}
+        value={value.text}
+        disabled={!value.isEditing}
         className='inside buttonStyle'
         onChange={(e) => editTodo(index, e.target.value)}
       />
@@ -59,13 +78,14 @@ function TodoComponent({ value, index, editTodo, deleteTodo }) {
         <button onClick={() => deleteTodo(index)}>
           <FiMinusCircle />
         </button>
-        <button>
+        <button onClick={() => toggleEditMode(index)}>
           <FaPen />
         </button>
       </div>
     </div>
   );
 }
+
 
 
 
